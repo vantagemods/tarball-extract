@@ -8,13 +8,13 @@ function extractTarball(sourceFile, destination, callback) {
     // This file is gzipped, use zlib to deflate the stream before passing to tar.
     fs.createReadStream(sourceFile)
     .pipe(zlib.createGunzip())
-    .pipe(tar.extract({ path: destination}))
+    .pipe(tar.extract({ cwd: destination}))
     .on('error', function(er) { callback(er)})
     .on("end", function() { callback(null)})
   } else {
     // This file is not gzipped, just deflate it.
     fs.createReadStream(sourceFile)
-    .pipe(tar.extract({ path: destination}))
+    .pipe(tar.extract({ cwd: destination}))
     .on('error', function(er) { callback(er)})
     .on("end", function() { callback(null)})
   }
